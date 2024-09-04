@@ -6,7 +6,7 @@ import { getApiUrl } from '../utils/api';
 async function getNews(): Promise<NewsItem[]> {
 //  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const apiUrl = getApiUrl();
-  const res = await fetch(`${apiUrl}/api/news`, { 
+  const res = await fetch(`${apiUrl}/news`, { 
     next: { revalidate: 60 },
     headers: {
       'Cache-Control': 'no-cache'

@@ -6,7 +6,7 @@ async function getNewsItem(id: string): Promise<NewsItem> {
   //  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const apiUrl = getApiUrl();
 
-  const res = await fetch(`${apiUrl}/api/news/${id}`, { next: { revalidate: 60 } });
+  const res = await fetch(`${apiUrl}/news/${id}`, { next: { revalidate: 60 } });
 
   if (!res.ok) {
     if (res.status === 404) {

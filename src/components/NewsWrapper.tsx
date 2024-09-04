@@ -6,9 +6,9 @@ import { getApiUrl } from '../app/utils/api';
 async function getNewsItems(): Promise<NewsItem[]> {
 //  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 const apiUrl = getApiUrl();
-console.log('Fetching news from:', `${apiUrl}/api/news`) // デバッグログ
+console.log('Fetching news from:', `${apiUrl}/news`) // デバッグログ
 
-  const res = await fetch(`${apiUrl}/api/news`, { 
+  const res = await fetch(`${apiUrl}/news`, { 
     next: { revalidate: 60 }
   })
 

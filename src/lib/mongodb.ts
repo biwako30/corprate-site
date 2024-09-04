@@ -13,5 +13,6 @@ export async function connect(): Promise<ConnectResult> {
   }
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db('dbtest');
+  console.log('Database Connection');
   return { client, db };
 }
