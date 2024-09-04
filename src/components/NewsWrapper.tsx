@@ -1,10 +1,12 @@
 // src/components/NewsWrapper.tsx
 import NewsContent from './NewsContent'
 import { NewsItem } from '@/lib/types/news'
+import { getApiUrl } from '../app/utils/api';
 
 async function getNewsItems(): Promise<NewsItem[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-  console.log('Fetching news from:', `${apiUrl}/api/news`) // デバッグログ
+//  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+const apiUrl = getApiUrl();
+console.log('Fetching news from:', `${apiUrl}/api/news`) // デバッグログ
 
   const res = await fetch(`${apiUrl}/api/news`, { 
     next: { revalidate: 60 }

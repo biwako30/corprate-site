@@ -1,17 +1,20 @@
 import { NewsItem } from '@/lib/types/news';
 import Image from 'next/image';
+import { getApiUrl } from '../../utils/api';
 
 async function getNewsItem(id: string): Promise<NewsItem> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  //  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  const apiUrl = getApiUrl();
+
   const res = await fetch(`${apiUrl}/api/news/${id}`, { next: { revalidate: 60 } });
-  
+
   if (!res.ok) {
     if (res.status === 404) {
       throw new Error('News item not found');
     }
     throw new Error('Failed to fetch news item');
   }
-  
+
   const data = await res.json();
   return {
     ...data,

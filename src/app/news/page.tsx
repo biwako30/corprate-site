@@ -1,9 +1,11 @@
 import { NewsItem } from '@/lib/types/news';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getApiUrl } from '../utils/api';
 
 async function getNews(): Promise<NewsItem[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+//  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  const apiUrl = getApiUrl();
   const res = await fetch(`${apiUrl}/api/news`, { 
     next: { revalidate: 60 },
     headers: {
