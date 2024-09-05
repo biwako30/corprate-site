@@ -4,7 +4,9 @@ import { NewsItem } from '@/lib/types/news';
 
 export async function GET() {
   return handleNewsRequest(async (collection: Collection<NewsItem>) => {
+    console.log('Querying database');
     return await collection.find().sort({ date: -1 }).toArray();
+    console.log(`Found news items`);
   });
 }
 
