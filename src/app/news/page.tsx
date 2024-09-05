@@ -3,8 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getApiUrl } from '../utils/api';
 
-export const dynamic = 'force-dynamic';
-
 async function getNews(): Promise<NewsItem[]> {
 //  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const apiUrl = getApiUrl();
@@ -19,7 +17,9 @@ async function getNews(): Promise<NewsItem[]> {
     throw new Error('Failed to fetch news');
   }
   
-  const data = await res.json();
+  // const data = await res.json();
+  const text = await res.text();
+  const data = JSON.parse(text)
   
   return data.map((item: any) => ({
     ...item,
