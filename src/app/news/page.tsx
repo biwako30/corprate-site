@@ -17,9 +17,7 @@ async function getNews(): Promise<NewsItem[]> {
     throw new Error('Failed to fetch news');
   }
   
-  // const data = await res.json();
-  const text = await res.text();
-  const data = JSON.parse(text)
+  const data = await res.json();
   
   return data.map((item: any) => ({
     ...item,
