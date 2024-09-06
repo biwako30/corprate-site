@@ -4,21 +4,20 @@ import Image from 'next/image';
 import { getApiUrl } from '../utils/api';
 
 async function getNews(): Promise<NewsItem[]> {
-//  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-  const apiUrl = getApiUrl();
-  const res = await fetch(`${apiUrl}/news`, { 
+  // 相対パスを使用
+  const res = await fetch('/api/news', {
     next: { revalidate: 60 },
     headers: {
       'Cache-Control': 'no-cache'
     }
   });
-  
+
   if (!res.ok) {
     throw new Error('Failed to fetch news');
   }
-  
+
   const data = await res.json();
-  
+
   return data.map((item: any) => ({
     ...item,
     date: new Date(item.date)
@@ -27,7 +26,7 @@ async function getNews(): Promise<NewsItem[]> {
 
 function formatDate(dateString: string | Date): string {
   const date = new Date(dateString);
-  
+
   // 無効な日付の場合は空文字列を返す
   if (isNaN(date.getTime())) {
     return '';
@@ -41,9 +40,15 @@ function formatDate(dateString: string | Date): string {
 }
 
 export default async function NewsPage() {
-  let news = await getNews();
+  let news: NewsItem[] = [];
 
-  console.log('News items:', news);
+  try {
+    news = await getNews();
+    console.log('News items:', news);
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    // エラーハンドリング（例：エラーメッセージを表示）
+  }
 
   return (
     <main className="container mx-auto px-4 py-8">
