@@ -1,12 +1,10 @@
 import { NewsItem } from '@/lib/types/news';
 import Image from 'next/image';
 import { getApiUrl } from '../../utils/api';
+export const dynamic = 'force-dynamic';
 
 async function getNewsItem(id: string): Promise<NewsItem> {
-  //  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-  const apiUrl = getApiUrl();
-
-  const res = await fetch(`${apiUrl}/news/${id}`, { next: { revalidate: 60 } });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news/${id}`, { cache: 'no-store' });
 
   if (!res.ok) {
     if (res.status === 404) {
