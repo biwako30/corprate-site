@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { getApiUrl } from '../utils/api';
 
 async function getNews(): Promise<NewsItem[]> {
-  // 絶対URLを使用
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const res = await fetch(`${apiUrl}/api/news`, { 
     cache: 'no-store',
@@ -53,8 +52,9 @@ export default async function NewsPage() {
   return (
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">ニュース一覧</h1>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {news.map((item) => (
+      {news.length > 0 ? (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {news.map((item) => (
           <Link href={`/news/${item.newsId}`} key={item.newsId}>
             <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative w-full h-48">
@@ -76,6 +76,9 @@ export default async function NewsPage() {
           </Link>
         ))}
       </div>
+      ) : (
+        <p>ニュースの読み込み中にエラーが発生しました。</p>
+      )}
     </main>
   );
 }
