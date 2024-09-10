@@ -4,7 +4,8 @@ import { getApiUrl } from '../../utils/api';
 export const dynamic = 'force-dynamic';
 
 async function getNewsItem(id: string): Promise<NewsItem> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news/${id}`, { cache: 'no-store' });
+  const apiUrl = getApiUrl();
+  const res = await fetch(`${apiUrl}/news/${id}`, { cache: 'no-store' });
 
   if (!res.ok) {
     if (res.status === 404) {
